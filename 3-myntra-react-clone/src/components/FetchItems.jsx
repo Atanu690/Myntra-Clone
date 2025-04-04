@@ -4,6 +4,8 @@ import { itemsActions } from "../store/itemSlice";
 import { fetchStatusActions } from "../store/fetchStatusSlice";
 
 const FetchItems = () => {
+  const url = import.meta.env.VITE_API_KEY;
+  
   const fetchStatus = useSelector((store) => store.fetchStatus);
   const dispatch = useDispatch();
 
@@ -13,7 +15,7 @@ const FetchItems = () => {
     const controller = new AbortController();
     const signal = controller.signal;
     dispatch(fetchStatusActions.markFetchingStarted());
-    fetch("http://localhost:8080/items", { signal })
+    fetch(`${url}/items`, { signal })
       .then((res) => res.json())
       .then(({ items }) => {
         dispatch(fetchStatusActions.markFetchDone());
